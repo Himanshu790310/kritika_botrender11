@@ -178,8 +178,19 @@ async def generate_response(update: Update, context):
         prompt = f"उपयोगकर्ता का नाम: {user_first_name}\nउपयोगकर्ता का संदेश: {user_message}"
         logger.info(f"Sending to Gemini: '{prompt}'")
 
+        # --- ADD THESE NEW LOGGING LINES ---
+        logger.info("Attempting to send message to Gemini...")
         response = chat_session.send_message(prompt)
+        logger.info(f"Gemini response object received: {response}") # Log the raw response object
+        # --- END NEW LOGGING LINES ---
+
         bot_reply = response.text if hasattr(response, "text") else ""
+
+        # --- ADD THESE NEW LOGGING LINES ---
+        logger.info(f"Extracted bot_reply (text): '{bot_reply}'")
+        if not bot_reply:
+            logger.warning("Bot reply text is empty after Gemini call.")
+        # --- END NEW LOGGING LINES ---
 
         if bot_reply:
             await context.bot.send_message(
@@ -187,17 +198,20 @@ async def generate_response(update: Update, context):
                 text=bot_reply,
                 parse_mode=ParseMode.MARKDOWN
             )
+            logger.info(f"Successfully sent response to chat_id={chat_id}") # Log successful send
         else:
             await context.bot.send_message(
                 chat_id=chat_id,
                 text="माफ़ करें, कुछ गड़बड़ हो गई। मैं अभी जवाब नहीं दे पा रही हूँ।"
             )
+            logger.warning(f"Sent fallback error message to chat_id={chat_id} due to empty reply.") # Log fallback
     except Exception as e:
         logger.error(f"Error with Gemini API for chat_id={chat_id}: {e}", exc_info=True)
         await context.bot.send_message(
             chat_id=chat_id,
             text="क्षमा करें, मुझे जवाब देने में परेशानी हो रही है। कृपया बाद में कोशिश करें।"
         )
+        logger.error(f"Sent user-facing error message to chat_id={chat_id}.") # Log user-facing error
 
 async def set_webhook():
     """Set webhook for production environment."""
