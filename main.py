@@ -18,7 +18,7 @@ PORT = int(os.environ.get('PORT', 8443))
 WEBHOOK_URL = os.environ.get('WEBHOOK_URL')
 TELEGRAM_BOT_TOKEN = os.environ.get('TELEGRAM_BOT_TOKEN')
 GOOGLE_API_KEY = os.environ.get('GOOGLE_API_KEY')
-WEBHOOK_SECRET_TOKEN = os.environ.get('WEBHOOK_SECRET_TOKEN')
+WEBHOOK_SECRET_TOKEN = os.environ.get('WEBHOOK_SECRET_TOKEN1')
 
 if not TELEGRAM_BOT_TOKEN or not GOOGLE_API_KEY:
     raise ValueError("Missing required environment variables: TELEGRAM_BOT_TOKEN and GOOGLE_API_KEY")
