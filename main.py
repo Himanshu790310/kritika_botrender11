@@ -235,4 +235,4 @@ def main() -> None:
 
 if __name__ == "__main__":
     # For production, you might want to run set_webhook() separately
-    asyncio.run(main())
+    main() # <-- Call main() directly
