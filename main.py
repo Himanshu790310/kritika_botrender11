@@ -225,7 +225,7 @@ def main() -> None:
             listen="0.0.0.0",
             port=PORT,
             webhook_url=f"{WEBHOOK_URL}/webhook",
-            secret_token='re:Dz)22:f]4^n>(bb%7Ka4U£"B!*%g£C>ak',
+            secret_token='13T2d1xv1CltdjpwA3m20WHAkf7amtnyeRRO',
             cert='cert.pem' if os.path.exists('cert.pem') else None
         )
     else:
